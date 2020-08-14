@@ -1,0 +1,24 @@
+.card-wrapper{
+  display: flex;
+  justify-content: space-between;
+  &__details {
+    display: "flex";
+    flex-direction: "column";
+  };
+  &__content{
+    writing-mode: vertical-lr;
+    flex: "1 0 auto";
+  };
+  &__img{
+    width: 150px;
+    height: 150px;
+    background-size: 300% !important;
+    transition: background-size .5s;
+    &:hover{
+      background-size: 100% !important;
+    }
+  };
+  .MuiCardContent-root{
+    padding: 0px !important;
+  }
+}
