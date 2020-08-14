@@ -20,7 +20,7 @@ const Index = (props) => {
 
   async function getNewData(page) {
     const res = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon?offset=${page * itemAmount}&limit=20`
+      `https://pokeapi.co/api/v2/pokemon?offset=${(page-1) * itemAmount}&limit=20`
     );
     setData(res.data.results);
   }

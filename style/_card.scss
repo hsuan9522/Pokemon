@@ -12,10 +12,12 @@
   &__img{
     width: 150px;
     height: 150px;
-    background-size: 300% !important;
-    transition: background-size .5s;
-    &:hover{
-      background-size: 100% !important;
+    &.has-pic{
+      background-size: 300% !important;
+      transition: background-size .5s;
+      &:hover{
+        background-size: 100% !important;
+      }
     }
   };
   .MuiCardContent-root{
