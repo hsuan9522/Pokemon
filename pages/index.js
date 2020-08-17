@@ -41,7 +41,7 @@ const Index = (props) => {
         {data.length !== 0 &&
           data.map((el) => {
             return (
-              <div className="col-md-3 col-6 mb-3" key={el.name}>
+              <div className="col-lg-3 col-6 mb-3" key={el.name}>
                 <PokeCard data={el}></PokeCard>
               </div>
             );
@@ -58,8 +58,7 @@ const Index = (props) => {
 };
 
 Index.getInitialProps = async () => {
-  const res = await axios.get("https://pokeapi.co/api/v2/pokemon");
-  const data = res.data;
+  const {data:data} = await axios.get("https://pokeapi.co/api/v2/pokemon");
   return {
     list: data
   };

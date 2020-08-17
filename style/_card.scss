@@ -1,17 +1,21 @@
 .card-wrapper{
   display: flex;
   justify-content: space-between;
-  &__details {
-    display: "flex";
-    flex-direction: "column";
+  height: 100%;
+  &__detail {
+    height: 100%;
+    position: relative;
   };
   &__content{
     writing-mode: vertical-lr;
-    flex: "1 0 auto";
+    justify-content: space-between;
+    display: flex;
+    height: 100%;
+    position: absolute;
   };
   &__img{
-    width: 150px;
-    height: 150px;
+    width: 144px;
+    height: 170px;
     &.has-pic{
       background-size: 300% !important;
       transition: background-size .5s;
@@ -23,4 +27,31 @@
   .MuiCardContent-root{
     padding: 0px !important;
   }
+  .avatar{
+    position: absolute;
+    top: -10px;
+    right: 5px;
+    overflow: visible;
+    &__img{
+     height: 100%; 
+     filter: drop-shadow(5px 5px 2px #9d9c9c);
+    }
+    &.MuiAvatar-colorDefault{
+      background: none;
+    }
+  }
+}
+
+.tag-wrapper{
+    writing-mode: horizontal-tb;
+    display: flex;
+    flex-direction: column;
+    width: 60px;
+    .MuiChip-root{
+      height: 25px;
+      margin: 2px 0px;
+    }
+    .MuiChip-label{
+      padding: 0px !important;
+    }
 }
