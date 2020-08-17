@@ -26,10 +26,8 @@ const Index = (props) => {
   }
   return (
     <div className="container">
-      Hello World.
-      <Link href="/about">
-        <span>About</span>
-      </Link>
+      <h1 className="text-center p-3">Pokemon</h1>
+      
       <div
         onClick={() => {
           router.push("/about");

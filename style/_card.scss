@@ -29,8 +29,8 @@
   }
   .avatar{
     position: absolute;
-    top: -10px;
-    right: 5px;
+    top: -19px;
+    right: 0px;
     overflow: visible;
     &__img{
      height: 100%; 
@@ -38,6 +38,10 @@
     }
     &.MuiAvatar-colorDefault{
       background: none;
+    }
+    &.MuiAvatar-root{
+      height: 60px;
+      width: 60px;
     }
   }
 }

@@ -9,8 +9,7 @@ const PaginationI = (props) => {
   };
 
   return (
-    <div>
-      <div>{page}</div>
+    <div className="d-flex justify-content-center p-4">
       <Pagination
         count={Math.ceil(props.allCount / 20)}
         onChange={handleChange}
