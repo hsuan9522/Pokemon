@@ -4,11 +4,14 @@ import axios from "axios";
 
 import PokeCard from "../component/card";
 import Pagination from "../component/pagination";
+import PopupDetail from "../component/popupDetail";
 
 const Index = (props) => {
   const itemAmount = 20;
   const router = useRouter();
   const [data, setData] = useState([]);
+  const [open, setOpen] = useState(false);
+
   useEffect(() => {
     setData(props.list.results);
   }, []);
@@ -16,7 +19,14 @@ const Index = (props) => {
   function changePage(page) {
     getNewData(page);
   }
+  function handleClose(){
+    setOpen(false);
+  }
 
+  function handleClick(e){
+    setOpen(true);
+    console.log('click-',e);
+  }
   async function getNewData(page) {
     //切頁
     const res = await axios.get(
@@ -24,6 +34,7 @@ const Index = (props) => {
     );
     setData(res.data.results);
   }
+
   return (
     <div className="container">
       <h1 className="text-center p-3">Pokemon</h1>
@@ -40,11 +51,15 @@ const Index = (props) => {
           data.map((el) => {
             return (
               <div className="col-lg-3 col-6 mb-3" key={el.name}>
-                <PokeCard data={el}></PokeCard>
+                <PokeCard data={el} handleClick={handleClick}></PokeCard>
               </div>
             );
           })}
       </div>
+      {
+        open &&
+        <PopupDetail handleClose={handleClose} open={open}></PopupDetail>
+      }
       <div>
         <Pagination
           allCount={props.list.count}
