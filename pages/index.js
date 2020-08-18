@@ -1,10 +1,9 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 import PokeCard from "../component/card";
 import Pagination from "../component/pagination";
-import { useState, useEffect } from "react";
 
 const Index = (props) => {
   const itemAmount = 20;
@@ -19,6 +18,7 @@ const Index = (props) => {
   }
 
   async function getNewData(page) {
+    //切頁
     const res = await axios.get(
       `https://pokeapi.co/api/v2/pokemon?offset=${(page-1) * itemAmount}&limit=20`
     );
