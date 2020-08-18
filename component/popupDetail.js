@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import _ from "lodash";
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
@@ -5,40 +7,58 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
+import Chip from '@material-ui/core/Chip';
 
-const DialogTitle = ((props) => {
-  return (
-    <MuiDialogTitle disableTypography >
-      <Typography variant="h6">123</Typography>
-        <IconButton aria-label="close" onClick={()=>props.onClose()}>
-          <CloseIcon />
-        </IconButton>
-    </MuiDialogTitle>
-  );
-});
+import DescTab from "./descTab";
 
 
-const PopupDetail = (props)=> {
+const PopupDetail = (props) => {
+  const details = props.details;
+  const [name, setName] = useState(null);
+  const [genera, setGenera] = useState(null);
+  const [desc, setDesc] = useState([]);
+
+  function makeDescClear(data){
+    data.map(el => {
+      el.text = el.flavor_text.replace(/\s/g, ' ').toLowerCase();
+      return el;
+    })
+    let tmp = Object.values(_.groupBy(data, (el) => el.text));
+    //group到一半看要不要在整理或是這樣就好
+    console.log(tmp)
+    setDesc(tmp)
+  }
+
+  console.log(props.details)
+  useEffect(() => {
+    setName(details.names.find(el => el.language.name === 'zh-Hant').name)
+    setGenera(details.genera.find(el => el.language.name === 'zh-Hant').genus)
+    let desc_tmp = details.flavor_text_entries.filter(el => el.language.name === 'zh-Hant');
+    if (desc_tmp.length === 0) desc_tmp = details.flavor_text_entries.filter(el => el.language.name === 'en'); //沒中文抓英文
+    makeDescClear(desc_tmp)
+  }, [])
+  console.log('desc', desc)
   return (
     <div>
-      <Dialog onClose={props.handleClose} aria-labelledby="customized-dialog-title" open={true}>
-        <DialogTitle id="customized-dialog-title" onClose={props.handleClose}>
-          Modal title
-        </DialogTitle>
-        <MuiDialogContent dividers>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-            in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-          </Typography>
-          <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-            lacus vel augue laoreet rutrum faucibus dolor auctor.
-          </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-            scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-            auctor fringilla.
-          </Typography>
+      <Dialog onClose={props.handleClose} className="popup-wrapper" aria-labelledby="customized-dialog-title" open={true}>
+        <MuiDialogTitle disableTypography className="popup-wrapper__title">
+          <div>
+            <Typography variant="h6">{name}</Typography>
+            <Chip label={genera} variant="outlined" size="small" />
+          </div>
+          <IconButton aria-label="close" onClick={() => props.handleClose()}>
+            <CloseIcon />
+          </IconButton>
+        </MuiDialogTitle>
+        <MuiDialogContent className="popup-wrapper__content" dividers>
+          <div>
+            <div>
+              <DescTab></DescTab>
+            </div>
+            <div className="picture">
+              <img src={details.sprites.other.dream_world.front_default} />
+            </div>
+          </div>
         </MuiDialogContent>
         <MuiDialogActions>
           123

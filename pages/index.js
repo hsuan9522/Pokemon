@@ -11,6 +11,7 @@ const Index = (props) => {
   const router = useRouter();
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
+  const [details, setDetails] = useState({});
 
   useEffect(() => {
     setData(props.list.results);
@@ -25,7 +26,7 @@ const Index = (props) => {
 
   function handleClick(e){
     setOpen(true);
-    console.log('click-',e);
+    setDetails(e);
   }
   async function getNewData(page) {
     //切頁
@@ -58,7 +59,7 @@ const Index = (props) => {
       </div>
       {
         open &&
-        <PopupDetail handleClose={handleClose} open={open}></PopupDetail>
+        <PopupDetail handleClose={handleClose} open={open} details={details}></PopupDetail>
       }
       <div>
         <Pagination
