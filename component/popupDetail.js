@@ -25,11 +25,9 @@ const PopupDetail = (props) => {
     })
     let tmp = Object.values(_.groupBy(data, (el) => el.text));
     //group到一半看要不要在整理或是這樣就好
-    console.log(tmp)
     setDesc(tmp)
   }
 
-  console.log(props.details)
   useEffect(() => {
     setName(details.names.find(el => el.language.name === 'zh-Hant').name)
     setGenera(details.genera.find(el => el.language.name === 'zh-Hant').genus)
@@ -37,13 +35,13 @@ const PopupDetail = (props) => {
     if (desc_tmp.length === 0) desc_tmp = details.flavor_text_entries.filter(el => el.language.name === 'en'); //沒中文抓英文
     makeDescClear(desc_tmp)
   }, [])
-  console.log('desc', desc)
+
   return (
     <div>
       <Dialog onClose={props.handleClose} className="popup-wrapper" aria-labelledby="customized-dialog-title" open={true}>
         <MuiDialogTitle disableTypography className="popup-wrapper__title">
           <div>
-            <Typography variant="h6">{name}</Typography>
+            <Typography variant="h5" className="mb-2">{name}</Typography>
             <Chip label={genera} variant="outlined" size="small" />
           </div>
           <IconButton aria-label="close" onClick={() => props.handleClose()}>
@@ -53,7 +51,8 @@ const PopupDetail = (props) => {
         <MuiDialogContent className="popup-wrapper__content" dividers>
           <div>
             <div>
-              <DescTab></DescTab>
+              <Typography variant="h6" className="mb-1">Description</Typography>
+              <DescTab data={desc}></DescTab>
             </div>
             <div className="picture">
               <img src={details.sprites.other.dream_world.front_default} />

@@ -60,18 +60,3 @@
     }
 }
 
-.popup-wrapper{
-  &__title{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  &__content{
-    .picture{
-      width: 200px;
-      img {
-        width: 100%;;
-      }
-    }
-  }
-}
