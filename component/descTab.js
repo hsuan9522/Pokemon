@@ -5,6 +5,7 @@ import Chip from '@material-ui/core/Chip';
 const DescTab = (props) => {
   const [showText, setShowText] = useState()
   const description = props.data;
+  
   useEffect(()=>{
     getVersionDescription(0);
   },[])
