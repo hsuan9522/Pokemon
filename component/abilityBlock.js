@@ -20,7 +20,6 @@ const AbilityBlock = (props)=>{
         const res = await Promise.all(api);
         const tmp = res.map(el=>el.data);
         setAbilityDetails(tmp);
-        console.log(tmp)
       }catch(err){
         console.log(err)
       }
@@ -40,7 +39,6 @@ const AbilityBlock = (props)=>{
       return el;
     })
     result = Object.values(_.groupBy(result, (el) => el.text));
-    console.log('result',result);
     return result
   }
 
@@ -50,8 +48,10 @@ const AbilityBlock = (props)=>{
         return (
           <div key={el.name+'_'+index}>
             <div className="ability-wrapper__title">
-              <Typography variant="subtitle1" className="font-weight-bold">{getAbilityName(el)}</Typography>
-               {/* {abilityHidden[index] && "隱藏屬性"} */}
+              <Typography variant="subtitle1" className="font-weight-bold">
+                {getAbilityName(el)}
+                <small className="text-monospace text-black-50">{abilityHidden[index] && " /隱藏屬性"}</small>
+              </Typography>
             </div>
             <div>
               {
