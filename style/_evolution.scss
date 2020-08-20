@@ -1,0 +1,29 @@
+.evolution-wrapper{
+  .dot-wrapper{
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    .dot{
+      width:12px;
+      height: 12px;
+      background: #bbbbbb;
+      border-radius: 100%;
+    }
+    .name{
+      position: absolute;
+      width: 100px;
+      text-align: center;
+      margin-top: 15px;
+    }
+  }
+  .line{
+    // max-width:150px;
+    width: 20vw;
+    height: 2px;
+    background: #bbbbbb;
+    position: relative;
+    top: -5px;
+    display: inline-block;
+  }
+}

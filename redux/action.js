@@ -24,3 +24,42 @@ export const getPokemonData = (id, url) => async (dispatch,getState) => {
     });
   }
 }
+
+export const getEvolution = (url) => async (dispatch, getState) => {
+  function getAllEvolutions(data,res){
+    res = res? res: []
+    res.push(data.species)
+    if (data.evolves_to.length !== 0) {
+      getAllEvolutions(data.evolves_to[0],res)
+    }
+    return res;
+  }
+  try{
+    const id = url.match(/\/(\d.*)\/$/g)[0].replace(/\//g, "");
+    let tmpState = getState().evolution;
+    let api = []
+    if (!tmpState.find(el => el.id === id)) {
+      const { data } = await axios.get(url);
+      let chain = data.chain;
+      chain = getAllEvolutions(chain)
+      chain.forEach(el=>{
+        api.push(axios.get(el.url));
+      })
+
+      let res = await Promise.all(api);
+      res = res.map(el=>el.data.names.find(e=>e.language.name ==='zh-Hant').name)
+      tmpState.push({
+        id: id,
+        chain_name: res,
+      })
+      dispatch({
+        type: "ADD_EVOLUTION",
+        data: tmpState
+      })
+    }
+  } catch(err){
+    console.log(err)
+  }
+  
+  return false;
+}

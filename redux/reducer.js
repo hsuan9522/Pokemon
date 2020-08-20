@@ -12,6 +12,11 @@ const reducer = (state = initState, action) => {
         ...state,
         pokemonData: action.data
       }
+    case "ADD_DATA":
+      return {
+        ...state,
+        evolution: action.data
+      }
     default:
       return state;
   }

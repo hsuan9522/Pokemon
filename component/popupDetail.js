@@ -12,8 +12,8 @@ import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 import DescTab from "./descTab";
-import AbilityBlock from "./abilityBlock.js";
-
+import AbilityBlock from "./abilityBlock";
+import Evolution from "./evolution";
 
 const PopupDetail = (props) => {
   const details = props.details;
@@ -28,6 +28,7 @@ const PopupDetail = (props) => {
     "special-defense": { name: "Sp.Def", color:"#c6e8b4"},
     speed: { name: "Speed", color:"#f1b2c6"}
   };
+
   console.log(details)
   function makeDescClear(data) {
     data.map(el => {
@@ -82,19 +83,22 @@ const PopupDetail = (props) => {
           </div>
 
           {/* H&W DATA */}
-          <div className="d-flex wh-block mb-3">
-            <div className="w-50 py-2 pr-1 pl-2">
-              <Typography variant="subtitle1" className="font-weight-bold">身高</Typography>
-              <Typography variant="body1" className="">{details.height / 10} m</Typography>
-            </div>
-            <div className="w-50 py-2 pr-2 pl-1">
-              <Typography variant="subtitle1" className="font-weight-bold">體重</Typography>
-              <Typography variant="body1" className="">{details.weight / 10} kg</Typography>
+          <div>
+            <Typography variant="h6" className="mb-1">Stats</Typography>
+            <div className="d-flex wh-block mb-3">
+              <div className="w-50 py-2 pr-1 pl-2">
+                <Typography variant="subtitle1" className="font-weight-bold">身高</Typography>
+                <Typography variant="body1" className="">{details.height / 10} m</Typography>
+              </div>
+              <div className="w-50 py-2 pr-2 pl-1">
+                <Typography variant="subtitle1" className="font-weight-bold">體重</Typography>
+                <Typography variant="body1" className="">{details.weight / 10} kg</Typography>
+              </div>
             </div>
           </div>
 
           {/* STAT */}
-          <div className="d-flex justify-content-between stat-wrapper">
+          <div className="d-flex justify-content-between stat-wrapper mb-3">
             { details.stats.map(el=>{
               return (
                 <div style={{ backgroundColor:statMap[el.stat.name].color}} key={el.stat.name} className="stat-wrapper__block">
@@ -104,6 +108,14 @@ const PopupDetail = (props) => {
                 </div>
               )
             })}
+          </div>
+
+          {/* EVOLUTION */}
+          <div>
+            <Typography variant="h6" className="mb-1">Evolution</Typography>
+            <div>
+              <Evolution data={details.evolution_chain}></Evolution>
+            </div>
           </div>
           <div className="picture">
             <img src={details.sprites.other.dream_world.front_default} />
