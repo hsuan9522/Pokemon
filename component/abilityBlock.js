@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Typography from '@material-ui/core/Typography';
 
 const AbilityBlock = (props)=>{
   const ability = props.ability;
@@ -44,18 +45,21 @@ const AbilityBlock = (props)=>{
   }
 
   return (
-    <div>
+    <div className="ability-wrapper p-2">
       { abilityDetails.map((el,index)=>{
         return (
-          <div>{
-            getAbilityName(el)} {abilityHidden[index] && "隱藏屬性"}
+          <div key={el.name+'_'+index}>
+            <div className="ability-wrapper__title">
+              <Typography variant="subtitle1" className="font-weight-bold">{getAbilityName(el)}</Typography>
+               {/* {abilityHidden[index] && "隱藏屬性"} */}
+            </div>
             <div>
               {
-                getAbilityDescription(el).map(el=>{
+                getAbilityDescription(el).map((el1,i)=>{
                   return (
-                    <div>
-                      {el.map(e => { return (<div>{e.version_group.name}</div>)})}
-                      {el[0].flavor_text}
+                    <div key={el.name + index + '_' + i} className="ability-wrapper__content">
+                      <div className="version-chip small">{el1.map((e, ii) => { return (<span key={el.name + index + '_' + i+'_'+ii}>{e.version_group.name.toUpperCase()}</span>) })}</div>
+                      <div>{el1[0].flavor_text}</div>
                     </div>
                   )
                 })

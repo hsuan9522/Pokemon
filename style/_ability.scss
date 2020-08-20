@@ -1,0 +1,28 @@
+.ability-wrapper{
+  background: whitesmoke;
+  border-radius: 10px;
+  &__title{
+    padding-left: 3px;
+  }
+  &__content{
+    background: white;
+    border-radius: 0px 0px 6px 6px;
+    padding: 5px 8px;
+    margin-bottom: 8px;
+  }
+  .version-chip{
+    background: #e0e0e0;
+    padding: 1px 7px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-bottom: 3px;
+
+    span{
+      &:not(:last-child){
+        &:after{
+          content: "/ ";
+        }
+      }
+    }
+  }
+}

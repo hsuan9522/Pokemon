@@ -77,6 +77,7 @@ const PopupDetail = (props) => {
 
           {/* ABILITY */}
           <div className="mb-3">
+            <Typography variant="h6" className="mb-1">Abilities</Typography>
             <AbilityBlock ability={details.abilities}></AbilityBlock>
           </div>
 
