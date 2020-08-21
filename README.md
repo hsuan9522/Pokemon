@@ -13,6 +13,8 @@ I copy it to the CodeSandbox, so that everyone can see it directly.
 <br/>
 [Demo](https://1tu54.sse.codesandbox.io/).
 
+P.S. Due to the API doesn't have enough Chinese data, you will see many descriptions still in English.
+
 
 ## How to run on Local
 ```bash
