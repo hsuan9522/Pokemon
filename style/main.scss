@@ -5,4 +5,9 @@
 
 body {
   background-color: #e6e6d6 !important;
+  button {
+    &:focus, &:active{
+        outline: 0 !important;
+      }
+  }
 }

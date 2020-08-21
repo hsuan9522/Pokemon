@@ -127,7 +127,7 @@ const PopupDetail = (props) => {
 
         </MuiDialogContent>
         <MuiDialogActions>
-          123
+          
         </MuiDialogActions>
       </Dialog>
     </div>

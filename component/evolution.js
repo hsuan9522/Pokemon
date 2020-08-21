@@ -20,8 +20,6 @@ const Evolution = (props) => {
     dispatch(getEvolution(url))
   }, [])
 
-
-  console.log('url', url)
   return (
     <div className="step-wrapper">
       {evolutionData &&
