@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -8,7 +7,6 @@ import PopupDetail from "../component/popupDetail";
 
 const Index = (props) => {
   const itemAmount = 20;
-  const router = useRouter();
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
   const [details, setDetails] = useState({});

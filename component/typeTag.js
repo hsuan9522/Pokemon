@@ -1,5 +1,3 @@
-import Chip from '@material-ui/core/Chip';
-
 const TypeTag = (props) => {
   const mapType = {
     normal: { name: "一般", color: "#919AA2", img: "/img/type/normal.png"},

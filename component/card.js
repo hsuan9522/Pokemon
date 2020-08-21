@@ -8,8 +8,6 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from '@material-ui/core/Avatar';
 
 import TypeTag from "./typeTag"
-import PopupDetail from "../component/popupDetail.js";
-
 
 const PokeCard = (props) => {
   const [pic, setPic] = useState('/img/no-image.jpg');

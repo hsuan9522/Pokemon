@@ -9,7 +9,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import StarIcon from '@material-ui/icons/Star';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 import DescTab from "./descTab";
 import AbilityBlock from "./abilityBlock";
@@ -21,6 +20,7 @@ const PopupDetail = (props) => {
   const [name, setName] = useState(null);
   const [genera, setGenera] = useState(null);
   const [desc, setDesc] = useState([]);
+  
   const statMap = {
     hp: { name: "HP", color:"#ffb6b6"},
     attack: { name: "Atk", color:"#ffd2b2"},
