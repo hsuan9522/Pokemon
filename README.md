@@ -1,42 +1,38 @@
-# Hello World example
+# Pokemon List Website
 
-This example shows the most basic idea behind Next. We have 2 pages: `pages/index.js` and `pages/about.js`. The former responds to `/` requests and the latter to `/about`. Using `next/link` you can add hyperlinks between them with universal routing capabilities. The `day` directory shows that you can have subdirectories.
+The front-end framework on this project is  **Next.js(React)**, UI framework is base on **Material-UI**.
+\
+\
+API is come from [PokeAPI](https://pokeapi.co/).
+\
+Some icons is from [Wikimedia](https://commons.wikimedia.org/wiki/Category:Pok%C3%A9mon_types_icons).
+\
+\
+Cause Next.js is SSR, I can't use Github Page like I used to do.
+I copy it to the CodeSandbox, so that everyone can see it directly.
+<br/>
+[Demo](https://1tu54.sse.codesandbox.io/).
 
-## Deploy your own
 
-Deploy the example using [Vercel](https://vercel.com):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/vercel/next.js/tree/canary/examples/hello-world)
-
-## How to use
-
-### Using `create-next-app`
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
+## How to run on Local
 ```bash
-npx create-next-app --example hello-world hello-world-app
-# or
-yarn create next-app --example hello-world hello-world-app
-```
+git clone https://github.com/hsuan9522/Pokemon.git
 
-### Download manually
-
-Download the example:
-
-```bash
-curl https://codeload.github.com/vercel/next.js/tar.gz/canary | tar -xz --strip=2 next.js-canary/examples/hello-world
-cd hello-world
-```
-
-Install it and run:
-
-```bash
 npm install
 npm run dev
 # or
-yarn
+yarn install
 yarn dev
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/import?filter=next.js&utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+## ToDoList
+- [ ] Search Input
+- [ ] Use more Redux to reduce the request
+- [ ] Add more information for Pokemon
+- [ ] Loading icon or skeleton while waiting the data.
+
+<!-- ## Deploy your own
+
+Deploy the example using [Vercel](https://vercel.com):
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/vercel/next.js/tree/canary/examples/hello-world) -->

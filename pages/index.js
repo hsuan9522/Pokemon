@@ -24,6 +24,7 @@ const Index = (props) => {
   }
 
   function handleClick(e) {
+    setHover(null)
     setOpen(true);
     setDetails(e);
   }
