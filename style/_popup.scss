@@ -37,6 +37,7 @@
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 5px;
+    flex-wrap: wrap;
   }
 } 
 
@@ -51,6 +52,7 @@
 }
 
  .stat-wrapper{
+   overflow: scroll;
    &__block{
      text-align: center;
      flex: 1;

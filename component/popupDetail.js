@@ -14,6 +14,7 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import DescTab from "./descTab";
 import AbilityBlock from "./abilityBlock";
 import Evolution from "./evolution";
+import TypeTag from "./typeTag";
 
 const PopupDetail = (props) => {
   const details = props.details;
@@ -62,7 +63,10 @@ const PopupDetail = (props) => {
         <MuiDialogTitle disableTypography className="popup-wrapper__title">
           <div>
             <Typography variant="h5" className="mb-2">{name}</Typography>
-            <Chip label={genera} variant="outlined" size="small" />
+            <div className="d-flex align-items-center flex-wrap">
+              <Chip label={genera} variant="outlined" size="small" className="mr-1" />&ensp;/ &ensp;
+              <TypeTag data={details.types} outlined={true} size="small"></TypeTag>
+            </div>
           </div>
           <IconButton aria-label="close" onClick={() => props.handleClose()}>
             <CloseIcon />
@@ -117,9 +121,9 @@ const PopupDetail = (props) => {
               <Evolution data={details.evolution_chain}></Evolution>
             </div>
           </div>
-          <div className="picture">
+          {/* <div className="picture">
             <img src={details.sprites.other.dream_world.front_default} />
-          </div>
+          </div> */}
 
         </MuiDialogContent>
         <MuiDialogActions>

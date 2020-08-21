@@ -55,7 +55,7 @@ const PokeCard = (props) => {
             <Typography component="h6" variant="h6" className="p-0">
               {name}
             </Typography>
-            <TypeTag data={type} id={id}></TypeTag>
+            <TypeTag data={type} id={id} orientation="vertical"></TypeTag>
           </CardContent>
         </div>
         <CardMedia

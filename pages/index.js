@@ -51,7 +51,7 @@ const Index = (props) => {
         {data.length !== 0 &&
           data.map((el) => {
             return (
-              <div className="col-lg-3 col-6 mb-3" key={el.name}>
+              <div className="col-lg-3  col-md-6 col-12 mb-3" key={el.name}>
                 <PokeCard data={el} handleClick={handleClick}></PokeCard>
               </div>
             );

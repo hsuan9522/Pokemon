@@ -1,62 +1,78 @@
-.card-wrapper{
+.card-wrapper {
   display: flex;
   justify-content: space-between;
   height: 100%;
   &__detail {
     height: 100%;
     position: relative;
-  };
-  &__content{
+  }
+  &__content {
     writing-mode: vertical-lr;
     justify-content: space-between;
     display: flex;
     height: 100%;
     position: absolute;
-  };
-  &__img{
-    width: 144px;
+  }
+  &__img {
+    width: 137px;
     height: 170px;
-    &.has-pic{
+    &.has-pic {
       background-size: 300% !important;
-      transition: background-size .5s;
-      &:hover{
+      transition: background-size 0.5s;
+      &:hover {
         background-size: 100% !important;
       }
     }
-  };
-  .MuiCardContent-root{
+  }
+  .MuiCardContent-root {
     padding: 0px !important;
   }
-  .avatar{
+  .avatar {
     position: absolute;
     top: -19px;
     right: 0px;
     overflow: visible;
-    &__img{
-     height: 100%; 
-     filter: drop-shadow(5px 5px 2px #9d9c9c);
+    &__img {
+      height: 100%;
+      filter: drop-shadow(5px 5px 2px #9d9c9c);
     }
-    &.MuiAvatar-colorDefault{
+    &.MuiAvatar-colorDefault {
       background: none;
     }
-    &.MuiAvatar-root{
+    &.MuiAvatar-root {
       height: 60px;
       width: 60px;
     }
   }
 }
 
-.tag-wrapper{
-    writing-mode: horizontal-tb;
-    display: flex;
-    flex-direction: column;
-    width: 60px;
-    .MuiChip-root{
+.tag-wrapper {
+  writing-mode: horizontal-tb;
+  display: flex;
+  align-items: center;
+  .type-wrapper{
+    margin-top: 3px;
+    .type-icon {
+      border-radius: 5px 0px 0px 5px;
+      width: 23px;
+      display: inline-flex;
+      align-items: center;
+      filter: opacity(0.7);
+      img{
+        width: 20px;
+        margin-left: 2px;
+      }
+    }
+    .type-name {
+      border-radius: 0px 5px 5px 0px;
+      background: #9a9a9a;
       height: 25px;
-      margin: 2px 0px;
+      display: inline-flex;
+      width: 53px;
+      color: white;
+      padding-left: 6px;
+      font-size: 13px;
+      line-height: 25px;
     }
-    .MuiChip-label{
-      padding: 0px !important;
-    }
+  }
 }
-
