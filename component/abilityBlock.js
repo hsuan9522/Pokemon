@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Typography from '@material-ui/core/Typography';
+import { LinearProgress } from "@material-ui/core";
 
 const AbilityBlock = (props)=>{
   const ability = props.ability;
@@ -44,7 +45,9 @@ const AbilityBlock = (props)=>{
 
   return (
     <div className="ability-wrapper p-2">
-      { abilityDetails.map((el,index)=>{
+      { 
+        abilityDetails.length!==0 ?
+        abilityDetails.map((el,index)=>{
         return (
           <div key={el.name+'_'+index}>
             <div className="ability-wrapper__title">
@@ -68,7 +71,9 @@ const AbilityBlock = (props)=>{
           </div>
         )
       })
-      }
+      :
+      <LinearProgress></LinearProgress>
+     }
     </div>
   )
 }

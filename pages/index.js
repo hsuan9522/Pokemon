@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+import IconButton from '@material-ui/core/IconButton';
+
 import PokeCard from "../component/card";
 import Pagination from "../component/pagination";
 import PopupDetail from "../component/popupDetail";
@@ -39,7 +41,6 @@ const Index = (props) => {
   return (
     <div className="container">
       <h1 className="text-center p-3">Pokemon</h1>
-
       <div className="row">
         {data.length !== 0 &&
           data.map((el, index) => {
@@ -66,6 +67,9 @@ const Index = (props) => {
           changePage={changePage}
         ></Pagination>
       </div>
+      <IconButton className="github-icon" onClick={() => { window.open("https://github.com/hsuan9522/Pokemon", "_blank")}}>
+        <img src="/img/github-icon.png"/>
+      </IconButton>
     </div>
   );
 };

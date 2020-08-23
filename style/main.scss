@@ -10,4 +10,17 @@ body {
         outline: 0 !important;
       }
   }
+
+  .github-icon{
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 45px;
+    height: 45px;
+    padding: 5px;
+    margin: 5px;
+    img{
+      width: 100%;
+    }
+  }
 }

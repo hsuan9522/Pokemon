@@ -6,15 +6,15 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Avatar from '@material-ui/core/Avatar';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import TypeTag from "./typeTag"
 
 const PokeCard = (props) => {
-  const [pic, setPic] = useState('/img/no-image.jpg');
+  const [pic, setPic] = useState(null);
   const [type, setType] = useState([]);
   const [id, setId] = useState(null);
   const [name, setName] = useState(props.data.name);
-  const [species, setSpecies] = useState(null);
   const [details, setDetails] = useState(null);
   const [all ,setAll] = useState({});
 
@@ -27,7 +27,6 @@ const PokeCard = (props) => {
         setType(data.types);
         setId(data.id);
         const { data: species_res } = await axios.get(data.species.url);
-        setSpecies(species_res);
         setName(species_res.names.find(el => {
           return el.language.name == "zh-Hant"
         }).name )
@@ -56,11 +55,17 @@ const PokeCard = (props) => {
             <TypeTag data={type} id={id} orientation="vertical"></TypeTag>
           </CardContent>
         </div>
-        <CardMedia
-          className={`card-wrapper__img ${pic ==='/img/no-image.jpg'? '' : 'has-pic'}`}
-          image={pic}
-          title="Live from space album cover"
-        ></CardMedia>
+        {!pic ?
+          <div className="card-wrapper__img d-flex justify-content-center align-items-center">
+            <CircularProgress></CircularProgress>
+          </div>
+          :
+          <CardMedia
+            className={`card-wrapper__img ${pic ==='/img/no-image.jpg'? '' : 'has-pic'}`}
+            image={pic}
+            title="Live from space album cover"
+          ></CardMedia>
+        }
       </Card>
   );
 };
