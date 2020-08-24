@@ -25,6 +25,17 @@ export const getPokemonData = (id, url) => async (dispatch,getState) => {
   }
 }
 
+export const saveAllData = (id,data) => (dispatch, getState) => {
+  let list = getState().pokemonData || [];
+  if(!list.find(el=>el.id==id)){
+    list.push(data);
+    dispatch({
+      type: "ADD_DATA",
+      data: list,
+    })
+  }
+}
+
 export const getEvolution = (url) => async (dispatch, getState) => {
   function getAllEvolutions(data,res){
     res = res? res: []

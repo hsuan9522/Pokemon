@@ -9,6 +9,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import StarIcon from '@material-ui/icons/Star';
+import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
+import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 
 import DescTab from "./descTab";
 import AbilityBlock from "./abilityBlock";
@@ -60,6 +62,13 @@ const PopupDetail = (props) => {
   return (
     <div>
       <Dialog onClose={props.handleClose} className="popup-wrapper" aria-labelledby="customized-dialog-title" open={true}>
+        {/* //TODO 下一個，上一個的快捷按鈕 */}
+        {/* <IconButton className="forward-btn" >
+          <ArrowForwardIosRoundedIcon/>
+        </IconButton>
+        <IconButton className="back-btn">
+          <ArrowBackIosRoundedIcon/>
+        </IconButton> */}
         <MuiDialogTitle disableTypography className="popup-wrapper__title">
           <div>
             <Typography variant="h5" className="mb-2">{name}</Typography>

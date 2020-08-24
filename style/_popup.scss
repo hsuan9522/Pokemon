@@ -25,6 +25,24 @@
   .MuiDialog-paperWidthSm{
     width:600px
   }
+  .forward-btn, .back-btn{
+    position: fixed;
+    background: white;
+    top: 47%;
+    filter: drop-shadow(2px 4px 6px grey);
+    &:hover{
+      background: #d8d7d77a;
+      color: white;
+    }
+  }
+  .forward-btn{
+    right: 0px;
+    margin-right: calc((100% - 750px)/2);
+  }
+  .back-btn{
+    left: 0px;
+    margin-left: calc((100% - 750px)/2);
+  }
 }
 
 
@@ -72,5 +90,17 @@
    }
    .star{
      font-size: 18px;
+   }
+ }
+
+ @media (max-width:768px){
+   .popup-wrapper{
+     .forward-btn, .back-btn{
+       svg{
+         font-size: 1rem;
+       }
+       padding: 8px;
+       margin: 10px;
+     }
    }
  }

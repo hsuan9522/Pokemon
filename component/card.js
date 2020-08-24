@@ -12,27 +12,27 @@ import TypeTag from "./typeTag"
 
 const PokeCard = (props) => {
   const [pic, setPic] = useState(null);
-  const [type, setType] = useState([]);
   const [id, setId] = useState(null);
   const [name, setName] = useState(props.data.name);
-  const [details, setDetails] = useState(null);
-  const [all ,setAll] = useState({});
+  const [all ,setAll] = useState(null);
 
   useEffect(() => {
     async function getEachPokemon() {
       try {
-        const {data: data} = await axios.get(props.data.url);
-        setDetails(data);
+        const { data: data } = await axios.get(props.data.url); //pokemon那隻
+        const { data: species_res } = await axios.get(data.species.url); //species那隻
+
+        //把兩隻api的資料merge起來
+        let tmp = Object.assign({}, data, species_res);
+        setAll(tmp)
+
         data.sprites.other['official-artwork'].front_default ? setPic(data.sprites.other['official-artwork'].front_default) : setPic('/img/no-image.jpg');
-        setType(data.types);
         setId(data.id);
-        const { data: species_res } = await axios.get(data.species.url);
         setName(species_res.names.find(el => {
           return el.language.name == "zh-Hant"
         }).name )
 
-        let tmp = Object.assign({}, data, species_res);
-        setAll(tmp)
+        
       } catch (err) {
         console.log(err);
       }
@@ -42,19 +42,22 @@ const PokeCard = (props) => {
   
   return (
       <Card className="card-wrapper p-3" onClick={()=>props.handleClick(all)}>
-        { details &&
-          <Avatar className="avatar">
-          <img src={details.sprites.front_default} className="avatar__img"></img>
-          </Avatar>
+        { all &&
+          <div>
+            <Avatar className="avatar">
+            <img src={all.sprites.front_default} className="avatar__img"></img>
+            </Avatar>
+            <div className="card-wrapper__detail">
+              <CardContent className="card-wrapper__content">
+                <Typography component="h6" variant="h6" className="p-0">
+                  {name}
+                </Typography>
+                <TypeTag data={all.types} id={id} orientation="vertical"></TypeTag>
+              </CardContent>
+            </div>
+          </div>
         }
-        <div className="card-wrapper__detail">
-          <CardContent className="card-wrapper__content">
-            <Typography component="h6" variant="h6" className="p-0">
-              {name}
-            </Typography>
-            <TypeTag data={type} id={id} orientation="vertical"></TypeTag>
-          </CardContent>
-        </div>
+        
         {!pic ?
           <div className="card-wrapper__img d-flex justify-content-center align-items-center">
             <CircularProgress></CircularProgress>
