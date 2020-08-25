@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
+import { useDispatch, connect } from "react-redux";
 import axios from "axios";
 
 import IconButton from '@material-ui/core/IconButton';
 
+import { getAllData } from "../redux/action.js";
+
 import PokeCard from "../component/card";
 import Pagination from "../component/pagination";
 import PopupDetail from "../component/popupDetail";
+
 
 const Index = (props) => {
   const itemAmount = 20;
@@ -13,6 +17,7 @@ const Index = (props) => {
   const [open, setOpen] = useState(false);
   const [details, setDetails] = useState({});
   const [hover, setHover] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setData(props.list.results);
@@ -36,6 +41,7 @@ const Index = (props) => {
       `https://pokeapi.co/api/v2/pokemon?offset=${(page - 1) * itemAmount}&limit=20`
     );
     setData(res.data.results);
+    await dispatch(getAllData(res.data.results)); //pokemon & species 更多資料一起拿也存進redux
   }
 
   return (
@@ -51,7 +57,8 @@ const Index = (props) => {
                   transition: "transform .3s", 
                   zIndex: hover === index ? "111111" : "1",
                   filter: hover === index ? "drop-shadow( 3px 4px 12px black )" : "" }} 
-                key={el.name} onMouseEnter={() => setHover(index)} onMouseLeave={() => setHover(null)}>
+                  key={el.name} onMouseEnter={() => setHover(index)} onMouseLeave={() => setHover(null)}
+              >
                 <PokeCard data={el} handleClick={handleClick}></PokeCard>
               </div>
             );
@@ -74,11 +81,13 @@ const Index = (props) => {
   );
 };
 
-Index.getInitialProps = async () => {
+Index.getInitialProps = async ({ reduxStore}) => {
   const { data: data } = await axios.get("https://pokeapi.co/api/v2/pokemon");
+  await reduxStore.dispatch(getAllData(data.results))
   return {
     list: data
   };
 };
+
 
 export default Index;

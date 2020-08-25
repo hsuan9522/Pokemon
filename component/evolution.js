@@ -5,12 +5,13 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
+import { $getId } from '../utils';
 import { getEvolution } from "../redux/action";
 
 const Evolution = (props) => {
   const dispatch = useDispatch();
   const url = props.data.url;
-  const id = url.match(/\/(\d.*)\/$/g)[0].replace(/\//g, "");
+  const id = $getId(url)
   const evolutionData = useSelector(state => {
     return state.evolution.find(el => el.id === id)
   });

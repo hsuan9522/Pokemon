@@ -1,83 +1,107 @@
 import axios from 'axios';
 import _ from 'lodash';
+import { $getId } from '../utils';
 
-export const getPokemonSpecies = (id,url) => async (dispatch, getState) => {
-  if (getState().pokemonSpecies.length === 0 || _.isEmpty(getState().pokemonSpecies[id-1])){
-    const { data: res } = await axios.get(url);
-    let tmp = getState() ? getState().pokemonSpecies : [];
-    tmp[id-1]=res;
-    dispatch({
-      type: "ADD_SPECIES",
-      data: tmp
-    });
-  }
-}
-
-export const getPokemonData = (id, url) => async (dispatch,getState) => {
-  if (getState().pokemonData.length === 0 || _.isEmpty(getState().pokemonData[id-1])) {
-    const { data: res } = await axios.get(url);
-    let tmp = getState() ? getState().pokemonData : [];
-    tmp[id-1] = res;
-    dispatch({
-      type: "ADD_DATA",
-      data: tmp
-    });
-  }
-}
-
-export const saveAllData = (id,data) => (dispatch, getState) => {
+export const getAllData = (data) => async (dispatch, getState) => {
   let list = getState().pokemonData || [];
-  if(!list.find(el=>el.id==id)){
-    list.push(data);
-    dispatch({
-      type: "ADD_DATA",
-      data: list,
-    })
-  }
+  let tmp_list = [...list];
+  let pokemonAPI = [];
+  let speciesAPI = [];
+  data.forEach(el => {
+    const id = $getId(el.url)
+    if(!tmp_list.find(el=>el.id==id)){
+      pokemonAPI.push(axios.get(el.url))
+    }
+  })
+  let pokemon = await Promise.all(pokemonAPI);
+  pokemon = pokemon.map(el => {
+    el.data.pokemonId = $getId(el.config.url);
+    return el.data;
+  });
+  
+  pokemon.forEach(el=>{
+    speciesAPI.push(axios.get(el.species.url));
+  })
+
+  let species = await Promise.all(speciesAPI);
+  species = species.map(el => {
+    el.data.speciesId = $getId(el.config.url);
+    return el.data;
+  });
+  
+  pokemon.forEach((el, index) => {
+    let tmp = Object.assign({}, el, species[index]);
+    tmp_list.push(tmp)
+  })
+  dispatch({
+    type: "ADD_DATA",
+    data: tmp_list,
+  })
 }
 
 export const getEvolution = (url) => async (dispatch, getState) => {
-  function getAllEvolutions(data,res){
-    res = res? res: []
+  function getAllEvolutions(data, res) {
+    //TODO 以蚊香蝌蚪來說 可能不只一種狀況
+    res = res ? res : []
     res.push(data.species)
     if (data.evolves_to.length !== 0) {
-      getAllEvolutions(data.evolves_to[0],res)
+      getAllEvolutions(data.evolves_to[0], res)
     }
     return res;
   }
-  try{
-    const id = url.match(/\/(\d.*)\/$/g)[0].replace(/\//g, "");
+  try {
+    const id = $getId(url)
     let tmpState = getState().evolution;
-    let api = [];
-    let api_pic = [];
+    let nameArray = [];
+    let picArray = [];
+    const list = getState().pokemonData;
+
     if (!tmpState.find(el => el.id === id)) {
       const { data } = await axios.get(url);
       let chain = data.chain;
-      chain = getAllEvolutions(chain)
-      chain.forEach(el=>{
-        api.push(axios.get(el.url));
-        api_pic.push(axios.get(el.url.replace('pokemon-species', 'pokemon')))
+      let api = [];
+      chain = getAllEvolutions(chain);
+
+      chain.forEach(async (el) => {
+        const id = $getId(el.url)
+        const item = list.find(el => el.speciesId == id);
+        if(!item) {
+          //因為可能不存在過，所以要重新打api找
+          api.push(axios.get(el.url));
+          api.push(axios.get(`https://pokeapi.co/api/v2/pokemon/${el.name}`));
+          //需要保持排序所以先把空的推進去
+          nameArray.push('');
+          picArray.push('');
+        }else{
+          nameArray.push(item.names.find(e => e.language.name === 'zh-Hant').name);
+          picArray.push(item.sprites.other.dream_world.front_default)
+        }
       })
 
-      let res = await Promise.all(api);
-      res = res.map(el=>el.data.names.find(e=>e.language.name ==='zh-Hant').name)
-
-      let pic = await Promise.all(api_pic);
-      pic = pic.map(el => el.data.sprites.other.dream_world.front_default)
-      // console.log(pic)
+      if(api.length>0){
+        let res = await Promise.all(api);
+        res = res.map(el=>el.data);
+        const tmp = Object.assign({}, res[0], res[1]);
+        nameArray.forEach((el,index)=>{
+          if(el==='') {
+            nameArray[index] = tmp.names.find(e => e.language.name === 'zh-Hant').name;
+            picArray[index] = tmp.sprites.other.dream_world.front_default;
+          }
+        })
+      }
       tmpState.push({
         id: id,
-        chain_name: res,
-        chain_pic: pic,
+        chain_name: nameArray,
+        chain_pic: picArray,
       })
       dispatch({
         type: "ADD_EVOLUTION",
         data: tmpState
       })
     }
-  } catch(err){
+  } catch (err) {
     console.log(err)
   }
-  
+
   return false;
 }

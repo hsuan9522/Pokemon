@@ -11,7 +11,7 @@ const TypeTag = (props) => {
     grass: { name: "草", color: "#38C04B", img: "/img/type/grass.png"},
     ghost: { name: "幽靈", color: "#4D68B2", img: "/img/type/ghost.png"},
     ice: { name: "冰", color: "#4ED1C0", img: "/img/type/ice.png"},
-    dragon: { name: "龍", color: "#0D6DC9", img: "/img/type/dragon"},
+    dragon: { name: "龍", color: "#0D6DC9", img: "/img/type/dragon.png"},
     fighting: { name: "格鬥", color: "#DF2F6A", img: "/img/type/flighting.png"},
     dark: { name: "惡", color: "#5B5466" , img: "/img/type/dark.png"},
     steel: { name: "鋼", color: "#5B8EA2", img: "/img/type/steel.png"},
