@@ -12,6 +12,11 @@ const reducer = (state = initState, action) => {
         ...state,
         evolution: action.data
       }
+    case "TEST":
+      return {
+        ...state,
+        test: action.data
+      }
     default:
       return state;
   }

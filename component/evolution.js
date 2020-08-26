@@ -26,7 +26,7 @@ const Evolution = (props) => {
       {evolutionData &&
         <Stepper activeStep={-1} alternativeLabel>
           {evolutionData.chain_name.map((el, index) => (
-            <Step key={el}>
+            <Step key={el+index}>
               <StepLabel>
                 <img className="chain-pic" src={evolutionData.chain_pic[index]} />
                 <div>{el}</div>

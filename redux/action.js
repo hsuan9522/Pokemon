@@ -40,39 +40,53 @@ export const getAllData = (data) => async (dispatch, getState) => {
 }
 
 export const getEvolution = (url) => async (dispatch, getState) => {
-  function getAllEvolutions(data, res) {
-    //TODO 以蚊香蝌蚪來說 可能不只一種狀況
+  function getAllEvolutions(data, res, index, parent) {
+    //TODO 以蚊香蝌蚪來說 可能不只一種狀況（第四頁）
     res = res ? res : []
+    data.species.index = index;
+    data.species.parent = parent;
     res.push(data.species)
     if (data.evolves_to.length !== 0) {
-      getAllEvolutions(data.evolves_to[0], res)
+      data.evolves_to.forEach(el=>{
+        getAllEvolutions(el, res, index+1, data.species.name)
+      })
     }
     return res;
   }
   try {
     const id = $getId(url)
     let tmpState = getState().evolution;
+    let testState = getState().test;
     let nameArray = [];
     let picArray = [];
+    let testArray = [];
     const list = getState().pokemonData;
 
     if (!tmpState.find(el => el.id === id)) {
       const { data } = await axios.get(url);
       let chain = data.chain;
+      console.log('origin', chain)
       let api = [];
-      chain = getAllEvolutions(chain);
-
+      chain = getAllEvolutions(chain,[],1);
+      console.log(chain);
       chain.forEach(async (el) => {
-        const id = $getId(el.url)
-        const item = list.find(el => el.speciesId == id);
+        const name = el.name;
+        const item = list.find(el => el.name == name);
         if(!item) {
           //因為可能不存在過，所以要重新打api找
           api.push(axios.get(el.url));
-          api.push(axios.get(`https://pokeapi.co/api/v2/pokemon/${el.name}`));
+          api.push(axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`));
           //需要保持排序所以先把空的推進去
           nameArray.push('');
+          testArray.push('')
           picArray.push('');
         }else{
+          testArray.push({
+            name: item.name,
+            c_name: item.names.find(e => e.language.name === 'zh-Hant').name,
+            pic: item.sprites.other.dream_world.front_default,
+            parent: el.parent
+          })
           nameArray.push(item.names.find(e => e.language.name === 'zh-Hant').name);
           picArray.push(item.sprites.other.dream_world.front_default)
         }
@@ -81,14 +95,40 @@ export const getEvolution = (url) => async (dispatch, getState) => {
       if(api.length>0){
         let res = await Promise.all(api);
         res = res.map(el=>el.data);
-        const tmp = Object.assign({}, res[0], res[1]);
+        let i = 0;
         nameArray.forEach((el,index)=>{
           if(el==='') {
+            const tmp = Object.assign({}, res[i], res[i+1]);
             nameArray[index] = tmp.names.find(e => e.language.name === 'zh-Hant').name;
-            picArray[index] = tmp.sprites.other.dream_world.front_default;
+            picArray[index] = tmp.sprites.other.dream_world.front_default ? tmp.sprites.other.dream_world.front_default : tmp.sprites.other['official-artwork'].front_default;
+            testArray[index] = {
+              name: tmp.name,
+              c_name: tmp.names.find(e => e.language.name === 'zh-Hant').name,
+              pic: tmp.sprites.other.dream_world.front_default,
+              parent: chain[index].parent
+            };
+            
+            i=i+2;
           }
         })
       }
+      let tree;
+      testArray.forEach(el=>{
+        if (!el.parent) {
+          tree = {
+            name: el.name,
+            pic: el.pic,
+            next: null
+          }
+        } else {
+          find(tree, el)
+        }
+      })
+
+      testState.push({
+        id: id,
+        chain: tree
+      })
       tmpState.push({
         id: id,
         chain_name: nameArray,
@@ -104,4 +144,21 @@ export const getEvolution = (url) => async (dispatch, getState) => {
   }
 
   return false;
+}
+
+function find(data, el) {
+  if (Array.isArray(data)) {
+    data.forEach(e => {
+      find(e, el)
+    })
+  } else if (data.name == el.parent) {
+    data.next = data.next || [];
+    data.next.push({
+      name: el.name,
+      pic: el.pic,
+      next: null
+    })
+  } else {
+    find(data.next, el)
+  }
 }
